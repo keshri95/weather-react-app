@@ -1,12 +1,13 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useState } from "react";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import { Divider } from "../comonents/Divider";
 
 function WeatherForm() {
-  const [location, setLocation] = useState('');
+  const [location, setLocation] = useState("");
   const navigate = useNavigate();
 
-
- const handleSubmit = (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
     navigate(`/weather?location=${encodeURIComponent(location)}`);
   };
@@ -14,40 +15,65 @@ function WeatherForm() {
   const handleCurrentLocation = () => {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
-        (position) => {
+        async (position) => {
           const latitude = position.coords.latitude;
           const longitude = position.coords.longitude;
 
-          console.log({latitude, longitude})
-
-
-          // TODO: Implement reverse geocoding to get location name based on latitude and longitude
-          // For brevity, we'll assume the location name is available and directly redirect to /weather.
-          navigate(`/weather?location=CurrentLocation`);
-          console.log({latitude, longitude})
-
+          try {
+            const apiKey = import.meta.env.VITE_API_KEY;
+            const apiUrl = `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${apiKey}&units=metric`;
+            const response = await axios.get(apiUrl);
+            const locationName = `${response.data.name}, ${response.data.sys.country}`;
+            navigate(`/weather?location=${encodeURIComponent(locationName)}`);
+          } catch (error) {
+            console.error("Error fetching weather data:", error);
+          }
         },
         (error) => {
-          console.log(error)
-          console.error('Error getting current location:', error);
+          console.error("Error getting current location:", error);
         }
       );
     } else {
-      console.error('Geolocation is not supported by this browser.');
+      console.error("Geolocation is not supported by this browser.");
     }
   };
 
   return (
-    <div>
-      <h1>Weather Application</h1>
-      <form onSubmit={handleSubmit}>
-        <label>
-          Location:
-          <input type="text" value={location} onChange={(e) => setLocation(e.target.value)} />
-        </label>
-      </form>
-      <button onClick={handleCurrentLocation}>Get Current Location Weather</button>
-    </div>
+    <React.Fragment>
+
+    <main className="container">
+      <div className="card border-primary mb-3">
+        <div className="card-header">
+          <h1 className="text-primary">Weather Application</h1>
+        </div>
+        <div className="card-body text-primary">
+          <form onSubmit={handleSubmit}>
+            <input
+              type="text"
+              value={location}
+              className="form-control"
+              onChange={(e) => setLocation(e.target.value)}
+              placeholder="Enter city name"
+            />
+          </form>
+
+          <div>
+            <Divider>OR</Divider>
+          </div>
+
+          <div className="d-grid gap-2 col-12 mx-auto">
+          <button
+            className="btn btn-primary"
+            onClick={handleCurrentLocation}
+          >
+            Get Device Location
+          </button>
+          </div>
+        </div>
+      </div>
+    </main>
+    </React.Fragment>
+
   );
 }
 
