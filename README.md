@@ -2,9 +2,9 @@
 
 clone repo locally
 
-git clone <url>  
+git clone url
 
-cd <app>
+cd app
 
 npm install
 
