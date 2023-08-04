@@ -35,67 +35,74 @@ function WeatherResult() {
 
   return (
     <React.Fragment>
-      <main className="container">
-        <div className="card mb-3">
-          <div className="card-header d-flex gap-3">
-            <button
-              className="rounded-circle btn btn-primary opacity-75"
-              title="Go Back"
-              onClick={handleGoBack}
-            >
-              <BiArrowBack color="black" size={20} />
-            </button>
-            <h1 className="text-primary">Weather App</h1>
-          </div>
-          <div className="card-body">
-            {weatherData ? (
-              <div className="text-center">
-                <img
-                  src={`http://openweathermap.org/img/w/${weatherData.weather[0].icon}.png`}
-                  alt={weatherData.weather[0].main}
-                  className="weather-img"
-                />
-                <p className="h1">{weatherData.main.temp} °C</p>
-                <p className="fs-5">{weatherData.weather[0].main}</p>
-                <p>
-                  <MdOutlineLocationOn size={30} /> {weatherData.name},
-                  {weatherData.sys.country}
-                </p>
-              </div>
-            ) : (
-              <p>Loading....</p>
-            )}
-          </div>
+      <main className="container mt-4">
+        <div className="card-container d-flex justify-content-center">
+          <div className="card mb-3">
+            <div className="card-header d-flex gap-3 align-items-center">
+              <span
+                className="cursor-pointer"
+                title="Go Back"
+                onClick={handleGoBack}
+              >
+                <BiArrowBack color="rgb(71, 198, 236)" size={30} />
+              </span>
+              <p className="h1 m-3 text-cyan">Weather App</p>
+            </div>
+            <div className="card-body">
+              {weatherData ? (
+                <div className="text-center">
+                  <img
+                    src={`http://openweathermap.org/img/w/${weatherData.weather[0].icon}.png`}
+                    alt={weatherData.weather[0].main}
+                    className="weather-img"
+                  />
+                  <p className="h1">{weatherData.main.temp} °C</p>
+                  <p className="fs-5">{weatherData.weather[0].main}</p>
+                  <p>
+                    <MdOutlineLocationOn size={30} /> {weatherData.name},
+                    {weatherData.sys.country}
+                  </p>
+                </div>
+              ) : (
+                <p>Loading....</p>
+              )}
+            </div>
 
-          <div className="card-footer">
-            {weatherData ? (
-              <div className="row">
-                <div className="col-6">
-                  <div className="d-flex align-items-center">
-                    <BsThermometerSun size={30} color="rgb(88, 204, 204)" />
-                    <div className="ms-2">
-                      <p className="fs-5">{weatherData.main.feels_like} °C</p>
-                      <p>Feels like</p>
+            <div className="card-footer">
+              {weatherData ? (
+                <div className="row align-items-center">
+                  <div className="col-6">
+                    <div className="d-flex align-items-center">
+                      <BsThermometerSun size={30} color="rgb(71, 198, 236)" />
+                      <div className="ms-2">
+                        <p className="fs-5 mb-0">
+                          {weatherData.main.feels_like} °C
+                        </p>
+                        <p className="mb-0">Feels like</p>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="col-6 border-start">
+                    <div className="d-flex align-items-center">
+                      <WiHumidity size={30} color="rgb(71, 198, 236)" />
+                      <div className="ms-2">
+                        <p className="fs-5 mb-0">
+                          {weatherData.main.humidity}%
+                        </p>
+                        <p className="mb-0">Humidity</p>
+                      </div>
                     </div>
                   </div>
                 </div>
-
-                <div className="col-6 border-start">
-                  <div className="d-flex align-items-center">
-                    <WiHumidity size={30} color="rgb(88, 204, 204)" />
-                    <div className="ms-2">
-                      <p className="fs-5">{weatherData.main.humidity}%</p>
-                      <p>Humidity</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            ) : (
-              <p>Loading.....</p>
-            )}
+              ) : (
+                <p>Loading.....</p>
+              )}
+            </div>
           </div>
         </div>
       </main>
+
     </React.Fragment>
   );
 }

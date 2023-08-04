@@ -40,40 +40,37 @@ function WeatherForm() {
 
   return (
     <React.Fragment>
-
-    <main className="container">
-      <div className="card border-primary mb-3">
-        <div className="card-header">
-          <h1 className="text-primary">Weather Application</h1>
-        </div>
-        <div className="card-body text-primary">
-          <form onSubmit={handleSubmit}>
-            <input
-              type="text"
-              value={location}
-              className="form-control"
-              onChange={(e) => setLocation(e.target.value)}
-              placeholder="Enter city name"
-            />
-          </form>
-
-          <div>
-            <Divider>OR</Divider>
+      <main className="container ">
+        <div className="card border-primary ">
+          <div className="card-header header-no-bg">
+            <p className="h1 m-2 text-cyan">Weather App</p>
           </div>
+          <div className="card-body text-primary m-4">
+            <form onSubmit={handleSubmit}>
+              <div className="mb-3">
+                <input
+                  type="text"
+                  value={location}
+                  className="form-control"
+                  onChange={(e) => setLocation(e.target.value)}
+                  placeholder="Enter city name"
+                />
+              </div>
+            </form>
 
-          <div className="d-grid gap-2 col-12 mx-auto">
-          <button
-            className="btn btn-primary"
-            onClick={handleCurrentLocation}
-          >
-            Get Device Location
-          </button>
+            <div>
+              <Divider>or</Divider>
+            </div>
+
+            <div className="d-grid gap-2 col-12 mx-auto mt-3">
+              <button className="btn btn-cyan" onClick={handleCurrentLocation}>
+                Get Device Location
+              </button>
+            </div>
           </div>
         </div>
-      </div>
-    </main>
+      </main>
     </React.Fragment>
-
   );
 }
 
